@@ -85,7 +85,6 @@
       localStorage.setItem('items', JSON.stringify(items));
       populateList(items, itemsList);
     } else if (e.target.matches('button')){
-      console.log(items[index]);
       items.splice(index, 1);
       populateList(items, itemsList);
     }
