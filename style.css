@@ -46,6 +46,7 @@
       padding: 10px 0;
       font-weight: 100;
       display: flex;
+      align-items: center;
     }
 
     .plates label {
@@ -76,3 +77,13 @@
       outline:0;
       border:1px solid rgba(0,0,0,0.1);
     }
+
+.delete {
+  background-image: url(https://www.instagram.com/static/sprites/core/9df056.png);
+  background-position: -353px -20px;
+  height: 14px;
+  width: 16px;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}

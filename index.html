@@ -5,22 +5,22 @@
   <title>LocalStorage</title>
   <link rel="stylesheet" href="style.css">
   <link rel="apple-touch-icon" sizes="57x57" href="./favicon.ico/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="./favicon.ico/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="./favicon.ico/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="./favicon.ico/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="./favicon.ico/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="./favicon.ico/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="./favicon.ico/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="./favicon.ico/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="./favicon.ico/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="./favicon.ico/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="./favicon.ico/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="./favicon.ico/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="./favicon.ico/favicon-16x16.png">
-<link rel="manifest" href="./favicon.ico/manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
+  <link rel="apple-touch-icon" sizes="60x60" href="./favicon.ico/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="./favicon.ico/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="./favicon.ico/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="./favicon.ico/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="./favicon.ico/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="./favicon.ico/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="./favicon.ico/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./favicon.ico/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="./favicon.ico/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon.ico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="./favicon.ico/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./favicon.ico/favicon-16x16.png">
+  <link rel="manifest" href="./favicon.ico/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
 </head>
 <body>
   <!--
@@ -66,26 +66,37 @@
   function populateList(items = [], itemsList){
     itemsList.innerHTML = items.map((item, i) => {
       return `
-        <li>
+        <li class='listItem'>
           <input type="checkbox" data-index=${i} id="item${i}" ${item.done ?
         'checked' : ' '}/>
           <label for="item${i}">${item.text} </label>
+          <button class='delete' data-index=${i} id=item${i}/>
         </li>
       `;
     }).join('');
   }
 
-  function toggleDone(e){
-    if (!e.target.matches('input')) return;
+  function clickButton(e){
     const el = e.target;
     const index = el.dataset.index;
-    items[index].done = !items[index].done;
-    localStorage.setItem('items', JSON.stringify(items));
-    populateList(items, itemsList);
+
+    if (e.target.matches('input')){
+      items[index].done = !items[index].done;
+      localStorage.setItem('items', JSON.stringify(items));
+      populateList(items, itemsList);
+    } else if (e.target.matches('button')){
+      console.log(items[index]);
+      items.splice(index, 1);
+      populateList(items, itemsList);
+    }
   }
 
+  // function deleteAll(e){
+  //   localStorage.removeItem('items', JSON.stringify(items));
+  // }
+
   addItems.addEventListener('submit', addItem)
-  itemsList.addEventListener('click', toggleDone)
+  itemsList.addEventListener('click', clickButton)
 
   populateList(items, itemsList);
 </script>
